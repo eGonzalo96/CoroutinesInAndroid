@@ -31,11 +31,12 @@ class MainActivity : AppCompatActivity() {
 
         Log.v("123456789", "Thread in GlobalScope: ${Thread.currentThread().name}")
 
-        withContext(Dispatchers.Main) {
-            Log.v("123456789", "Thread in Dispatcher.Main: ${Thread.currentThread().name}")
-            for(i in 1..20) {
-                delay(1000L)
-                textView_numbers.text = fib(i.toLong()).toString()
+        for(i in 1..20) {
+            val value = fib(i.toLong())
+            delay(1000L)
+            withContext(Dispatchers.Main) {
+                textView_numbers.text = "$value"
+                Log.v("123456789", "$value, Thread in: ${Thread.currentThread().name}")
             }
         }
 
